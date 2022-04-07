@@ -66,8 +66,6 @@ export const getTokenBalanceAL = async (
   tokenList: string[]
 ) => {
   const addr = await getAddressFromEns(address);
-  console.log("addr-al:", addr);
-  console.log("token", tokenList);
   if (addr) {
     let raw = JSON.stringify({
       jsonrpc: "2.0",
@@ -102,8 +100,6 @@ export const getTokenInfo = async (address: string) => {
   const tokenList = (await getTransactionHistory(address)) as string[];
   const addr = (await getAddressFromEns(address)) as string;
   if (addr) {
-    // const balances = await getTokenBalances(addr, tokenList);
-    // console.log(balances);
     const balances = await getTokenBalanceAL(addr, tokenList);
   }
 };

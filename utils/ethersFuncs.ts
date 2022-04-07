@@ -55,7 +55,6 @@ export const getAddressFromEns = async (name: string) => {
  */
 export const getEthBalance = async (address: string) => {
   const res = await etherscanProvider.getBalance(address);
-  console.log(ethers.utils.formatEther(res));
 };
 
 export const getTokenB = async (address: string, contractAddress?: string) => {
