@@ -1,4 +1,9 @@
-import { AssetTransfersCategory, createAlchemyWeb3 } from "@alch/alchemy-web3";
+import {
+  AssetTransfersCategory,
+  createAlchemyWeb3,
+  TokenBalancesResponse,
+  TokenMetadataResponse,
+} from "@alch/alchemy-web3";
 import { getAddressFromEns, getTokenB } from "./ethersFuncs";
 
 interface TransactionList {
@@ -53,12 +58,18 @@ export const getTransactionHistory = async (nameOrAddress: string) => {
 
 export const getTokenMetadata = async (address: string) => {
   if (address) {
-    const tokenMetadata = await web3.alchemy.getTokenMetadata(
-      "0xdac17f958d2ee523a2206206994597c13d831ec7"
-    );
-    console.log(tokenMetadata);
+    const tokenMetadata = await web3.alchemy.getTokenMetadata(address);
     return tokenMetadata;
   }
+};
+
+export const getTokenMetaDatas = async (tokenList: string[]) => {
+  let metadataList: (TokenMetadataResponse | undefined)[] = [];
+  tokenList.forEach(async (token) => {
+    const meta = await getTokenMetadata(token);
+    metadataList.push(meta);
+  });
+  return metadataList;
 };
 
 export const getTokenBalanceAL = async (
@@ -88,11 +99,11 @@ export const getTokenBalanceAL = async (
       requestOptions
     );
     const data = await res.json();
-    console.log(data.result);
+    // console.log(data.result);
     // const bal = data.result.tokenBalances[0].tokenBalance;
     // let balance = ethers.BigNumber.from(bal).toString();
     // console.log("Balance", balance);
-    // return data;
+    return data;
   }
 };
 
@@ -101,5 +112,10 @@ export const getTokenInfo = async (address: string) => {
   const addr = (await getAddressFromEns(address)) as string;
   if (addr) {
     const balances = await getTokenBalanceAL(addr, tokenList);
+    console.log("balances", balances.result.tokenBalances);
+  }
+  if (tokenList) {
+    const metadatas = await getTokenMetaDatas(tokenList);
+    console.log("metadata", metadatas);
   }
 };
