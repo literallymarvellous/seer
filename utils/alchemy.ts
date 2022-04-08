@@ -6,16 +6,6 @@ import {
 } from "@alch/alchemy-web3";
 import { getAddressFromEns } from "./ethersFuncs";
 
-interface TransactionList {
-  [key: string]: TokenInfo;
-}
-
-interface TokenInfo {
-  asset: string | null;
-  address: string | null;
-  decimals: string | null;
-}
-
 const web3 = createAlchemyWeb3(
   `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY}`
 );

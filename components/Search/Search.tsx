@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
 import { useRenders } from "../../hooks/useRenders";
+import { getResolver } from "../../utils/ethersFuncs";
 
 type SearchProps = {
   props: { address: string; setAddress: Dispatch<SetStateAction<string>> };
@@ -7,14 +8,21 @@ type SearchProps = {
 
 export const Search = ({ props: { address, setAddress } }: SearchProps) => {
   const [query, setQuery] = useState("");
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setAddress(query);
+    const resolver = await getResolver(query);
+    if (resolver === null) {
+      setError("No resolver found for this ens name");
+    } else {
+      setAddress(query);
+      setError("");
+    }
     setQuery("");
   };
 
@@ -29,6 +37,7 @@ export const Search = ({ props: { address, setAddress } }: SearchProps) => {
         onChange={handleChange}
       />
       <button type="submit">Search</button>
+      {error ? <p>{error}</p> : null}
     </form>
   );
 };
