@@ -57,29 +57,29 @@ export const getEthBalance = async (address: string) => {
   const res = await etherscanProvider.getBalance(address);
 };
 
-export const getTokenB = async (address: string, contractAddress?: string) => {
-  const addr = await getAddressFromEns(address);
-  let hash = ethers.utils.id("balanceOf(address)");
-  hash = hash.slice(0, 10);
-  console.log(addr);
-  console.log(hash);
-  if (addr) {
-    try {
-      const res = await infuraProvider.call({
-        from: addr,
-        to: "0xD5525D397898e5502075Ea5E830d8914f6F0affe",
-        // to: contractAddress,
-        data: hash,
-      });
-      console.log("BN", res);
-      let num = ethers.BigNumber.from(res).toString();
-      console.log(num);
-      // return num;
-    } catch (e) {
-      console.log(e);
-    }
-  }
-};
+// export const getTokenB = async (address: string, contractAddress?: string) => {
+//   const addr = await getAddressFromEns(address);
+//   let hash = ethers.utils.id("balanceOf(address)");
+//   hash = hash.slice(0, 10);
+//   console.log(addr);
+//   console.log(hash);
+//   if (addr) {
+//     try {
+//       const res = await infuraProvider.call({
+//         from: addr,
+//         to: "0xD5525D397898e5502075Ea5E830d8914f6F0affe",
+//         // to: contractAddress,
+//         data: hash,
+//       });
+//       console.log("BN", res);
+//       let num = ethers.BigNumber.from(res).toString();
+//       console.log(num);
+//       // return num;
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+// };
 
 export const hextoBigNumber = (hex: string) => {
   let num = ethers.BigNumber.from(hex).toString();

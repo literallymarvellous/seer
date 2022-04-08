@@ -18,8 +18,6 @@ export const Search = ({ props: { address, setAddress } }: SearchProps) => {
     setQuery("");
   };
 
-  useRenders("Search");
-
   return (
     <form onSubmit={handleSubmit}>
       <label htmlFor="address">Enter eth address or ens name</label>
@@ -30,7 +28,7 @@ export const Search = ({ props: { address, setAddress } }: SearchProps) => {
         value={query}
         onChange={handleChange}
       />
-      <button type="submit">Check</button>
+      <button type="submit">Search</button>
     </form>
   );
 };

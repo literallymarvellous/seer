@@ -4,7 +4,7 @@ import {
   TokenBalancesResponse,
   TokenMetadataResponse,
 } from "@alch/alchemy-web3";
-import { getAddressFromEns, getTokenB } from "./ethersFuncs";
+import { getAddressFromEns } from "./ethersFuncs";
 
 interface TransactionList {
   [key: string]: TokenInfo;
@@ -29,8 +29,7 @@ export const getNFTs = async (address: string) => {
     owner: address,
     // pageKey: "474fd443-8f83-4d0a-b8e0-3ab7ec965cd9",
   });
-  const nfts = await res;
-  console.log(nfts);
+  return res.ownedNfts;
 };
 
 export const getTransactionHistory = async (nameOrAddress: string) => {
@@ -57,10 +56,8 @@ export const getTransactionHistory = async (nameOrAddress: string) => {
 };
 
 export const getTokenMetadata = async (address: string) => {
-  if (address) {
-    const tokenMetadata = await web3.alchemy.getTokenMetadata(address);
-    return tokenMetadata;
-  }
+  const tokenMetadata = await web3.alchemy.getTokenMetadata(address);
+  return tokenMetadata;
 };
 
 export const getTokenMetaDatas = async (tokenList: string[]) => {
@@ -99,23 +96,21 @@ export const getTokenBalanceAL = async (
       requestOptions
     );
     const data = await res.json();
-    // console.log(data.result);
-    // const bal = data.result.tokenBalances[0].tokenBalance;
-    // let balance = ethers.BigNumber.from(bal).toString();
-    // console.log("Balance", balance);
     return data;
   }
 };
 
-export const getTokenInfo = async (address: string) => {
+export const getTokenBalances = async (address: string) => {
   const tokenList = (await getTransactionHistory(address)) as string[];
-  const addr = (await getAddressFromEns(address)) as string;
-  if (addr) {
+  const addr = await getAddressFromEns(address);
+  if (addr && tokenList.length > 0) {
     const balances = await getTokenBalanceAL(addr, tokenList);
-    console.log("balances", balances.result.tokenBalances);
+    return balances.result.tokenBalances;
   }
-  if (tokenList) {
-    const metadatas = await getTokenMetaDatas(tokenList);
-    console.log("metadata", metadatas);
-  }
+};
+
+export const getAllMetaData = async (address: string) => {
+  const tokenList = (await getTransactionHistory(address)) as string[];
+  const metadatas = await getTokenMetaDatas(tokenList);
+  return metadatas;
 };
