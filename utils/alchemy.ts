@@ -17,9 +17,8 @@ const web3 = createAlchemyWeb3(
 export const getNFTs = async (address: string) => {
   const res = await web3.alchemy.getNfts({
     owner: address,
-    // pageKey: "474fd443-8f83-4d0a-b8e0-3ab7ec965cd9",
   });
-  return res.ownedNfts;
+  return res;
 };
 
 export const getTransactionHistory = async (nameOrAddress: string) => {
