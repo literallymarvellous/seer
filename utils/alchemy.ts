@@ -103,3 +103,15 @@ export const getAllMetaData = async (address: string) => {
   const metadatas = await getTokenMetaDatas(tokenList);
   return metadatas;
 };
+
+export const getTokenInfo = async (address: string) => {
+  const tokenList = (await getTransactionHistory(address)) as string[];
+  const addr = await getAddressFromEns(address);
+  const metadatas = await getTokenMetaDatas(tokenList);
+  if (addr && tokenList.length > 0) {
+    const balances = await getTokenBalanceAL(addr, tokenList);
+    console.log(balances);
+    const tokenbalnces = balances.result.tokenBalances;
+    return { tokenbalnces, metadatas };
+  }
+};

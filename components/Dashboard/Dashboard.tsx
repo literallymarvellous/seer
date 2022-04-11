@@ -33,7 +33,8 @@ export const Dashboard = ({ address }: DashboardProps) => {
 
   return (
     <div>
-      <NftGrid nfts={nfts} />
+      {/* <NftGrid nfts={nfts} /> */}
+      hey
     </div>
   );
 };
