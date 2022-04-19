@@ -15,12 +15,7 @@ export const NftCard = ({ nft }: NftCardProps) => {
             alt={nft.title}
           />
         ) : (
-          <Image
-            src={nft.metadata?.image}
-            alt={nft.title}
-            width="250"
-            height="250"
-          />
+          <Image src={nft.metadata?.image} alt={nft.title} />
         )}
       </ImageWrapper>
 
@@ -29,10 +24,7 @@ export const NftCard = ({ nft }: NftCardProps) => {
   );
 };
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
+const Wrapper = styled.div``;
 
 const CardTitle = styled.div`
   padding: 8px 16px;
@@ -54,12 +46,9 @@ const CardDescription = styled.p`
 
 const ImageWrapper = styled.div`
   position: relative;
-  height: 100%;
 `;
 const Image = styled.img`
   width: 100%;
-  height: 100%;
   object-fit: cover;
-  /* object-fit: fill; */
   object-position: 0% center;
 `;

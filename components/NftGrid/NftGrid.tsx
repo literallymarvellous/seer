@@ -24,15 +24,16 @@ export const NftGrid = ({ nfts }: NFTGridProps) => {
 };
 
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 32px;
+  gap: 16px;
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const NFTWrapper = styled.div`
   min-width: 300px;
-  max-width: 500px;
   flex: 1;
 `;
